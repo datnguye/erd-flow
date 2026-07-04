@@ -1,0 +1,35 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: system-ui, sans-serif;
+  /* A dark ground so the package's default --erd-* fallbacks read well. */
+  background: #10151b;
+  color: #e6ebf1;
+}
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #2a333d;
+  font-size: 13px;
+}
+
+.demo-bar select,
+.demo-bar input {
+  font: inherit;
+}
+
+.demo-canvas {
+  flex: 1;
+  min-height: 0;
+}

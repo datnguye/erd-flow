@@ -1,0 +1,55 @@
+name: Release npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set package version from release tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          if ! echo "$TAG" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "release tag $GITHUB_REF_NAME is not a semver version (expected X.Y.Z or X.Y.Z-pre)" >&2
+            exit 1
+          fi
+          npm version "$TAG" --no-git-tag-version --allow-same-version
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build library
+        run: npm run build
+
+      - name: Verify dist artefacts
+        run: |
+          test -f dist/index.js
+          test -f dist/index.d.ts
+          test -f dist/erd-flow.css
+
+      - name: Publish
+        run: npm publish --access public --provenance ${{ github.event.release.prerelease && '--tag next' || '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

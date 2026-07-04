@@ -1,0 +1,9 @@
+- [Review process](feedback_review_process.md) — verify-then-fix discipline: refute against existing guards first, gate with tsc+vitest
+- [tableConstants lockstep gaps](project_tableconstants_lockstep_gaps.md) — estimateHeight missed COLUMNS_TOP_PADDING; cross-check the full constant list, not just "was it updated"
+- [Dead icon exports](project_dead_icon_exports.md) — icons.tsx trimmed from ~12 unused icons to the 2 ErdTableNode renders; host chrome icons don't belong here
+- [README prop/token drift](project_readme_prop_token_drift.md) — README Props table and --erd-* token list silently fall behind props.ts/theme.ts; diff, don't spot-check
+- [Untested pure edge helpers](project_untested_pure_edge_helpers.md) — edge-anchor.ts/geometry.ts/column-highlight.ts had zero coverage since xyflow is mocked in every component test
+- [Layout engine scale, verified](project_layout_engine_scale_verified.md) — measured radial/force at 500 nodes + complete-graph; only complete-graph breaks the overlap cap
+- [hideUnconnected + focus gap](project_hideunconnected_focus_gap.md) — focusing an island node with hideUnconnected on hid the focus node itself; fixed round 4
+- [Shadow token gap](project_shadow_token_gap.md) — 3 hardcoded box-shadow rgba()s in ErdTableNode.css lacked a --erd-* token; added --erd-shadow round 4
+- [nokey header keydown leak](project_nokey_header_keydown_leak.md) — header's a11y onKeyDown leaked into xyflow's panActivationKeyCode; fixed round 5 with .nokey class
