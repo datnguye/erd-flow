@@ -1,0 +1,57 @@
+version: "3"
+
+silent: true
+
+tasks:
+  default:
+    desc: List available tasks.
+    cmds:
+      - task --list
+
+  install:
+    desc: Install npm dependencies.
+    cmds:
+      - npm install
+
+  build:
+    desc: Build the library into dist/ (ESM + .d.ts + erd-flow.css).
+    cmds:
+      - npm run build
+
+  typecheck:
+    desc: Typecheck without emitting.
+    cmds:
+      - npm run typecheck
+
+  test:
+    desc: Run the vitest suite once (CI mode).
+    cmds:
+      - npm test
+
+  test:watch:
+    desc: Run vitest in watch mode.
+    cmds:
+      - npm run test:watch
+
+  e2e:
+    desc: Run the Playwright end-to-end suite (npm script owned by the e2e wiring).
+    cmds:
+      - npm run e2e
+
+  e2e:install:
+    desc: Install the Playwright browser used by the e2e suite.
+    cmds:
+      - npm run e2e:install
+
+  clean:
+    desc: Remove build artefacts and caches (does not touch node_modules).
+    cmds:
+      - rm -rf dist coverage
+      - rm -f tsconfig.tsbuildinfo
+
+  clean:all:
+    desc: Like clean, plus blow away node_modules.
+    deps:
+      - clean
+    cmds:
+      - rm -rf node_modules
