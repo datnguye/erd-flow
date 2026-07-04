@@ -5,8 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/%40datnguye%2Ferd-flow)](https://www.npmjs.com/package/@datnguye/erd-flow)
 [![npm downloads](https://img.shields.io/npm/dm/%40datnguye%2Ferd-flow)](https://www.npmjs.com/package/@datnguye/erd-flow)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg)](./tsconfig.json)
-[![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev)
+[![GitHub stars](https://img.shields.io/github/stars/datnguye/erd-flow)](https://github.com/datnguye/erd-flow/stargazers)
 
 A [React Flow](https://reactflow.dev) entity-relationship diagram for
 dbt projects: table nodes with per-column PK/FK badges, self-drawing foreign-key
