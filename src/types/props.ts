@@ -91,8 +91,9 @@ export interface ErdFlowProps {
   onExpandStateChange?: (state: { allExpanded: boolean; canExpand: boolean }) => void;
 
   // Pan / zoom / drag interactivity. Defaults to true. Pass false to lock the
-  // canvas (a static, non-pannable diagram) — a host can gate this behind its
-  // own "click to unlock" affordance.
+  // canvas (a static, non-pannable diagram that releases the wheel, so the
+  // page scrolls past it) — a host can gate this behind its own "click to
+  // unlock" affordance.
   interactive?: boolean;
 
   // Called when a table is activated (header single-click) or deactivated

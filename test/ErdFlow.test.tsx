@@ -211,6 +211,23 @@ describe("ErdFlow", () => {
     expect(screen.getByTestId("node-model.s.items").dataset.dimmed).toBe("false");
   });
 
+  it("interactive=false gates pan/zoom/drag/scroll props on ReactFlow", async () => {
+    render(<ErdFlow data={SMALL} interactive={false} />);
+    const flow = await screen.findByTestId("react-flow");
+    expect(flow.dataset.panOnDrag).toBe("false");
+    expect(flow.dataset.zoomOnScroll).toBe("false");
+    expect(flow.dataset.zoomOnPinch).toBe("false");
+    expect(flow.dataset.zoomOnDoubleClick).toBe("false");
+    expect(flow.dataset.nodesDraggable).toBe("false");
+    expect(flow.dataset.preventScrolling).toBe("false");
+  });
+
+  it("interactive=true (default) leaves preventScrolling on so zoom-on-scroll can capture the wheel", async () => {
+    render(<ErdFlow data={SMALL} />);
+    const flow = await screen.findByTestId("react-flow");
+    expect(flow.dataset.preventScrolling).toBe("true");
+  });
+
   it("without dimOnSelect a selection dims nothing", async () => {
     render(<ErdFlow data={SMALL} />);
     await waitFor(() => expect(screen.getByTestId("edge-e0")).toBeTruthy());

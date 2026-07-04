@@ -19,6 +19,26 @@ static docs SPA) and [dbterd-vscode](https://github.com/datnguye/dbterd-vscode)
 (a VS Code webview). Turns out one diagram is enough for two very different
 homes.
 
+## Demo
+
+![The erd-flow demo: table cards with PK/FK badges and self-drawing foreign-key edges landing on the joined rows, in the hierarchical layout](docs/demo.png)
+
+The repo ships a Vite playground wired to a sample dbt-style payload — the
+fastest way to see the diagram move before writing a line of host code:
+
+```bash
+git clone https://github.com/datnguye/erd-flow
+cd erd-flow
+npm install
+npm run dev
+```
+
+Open the printed URL at `/demo/index.html`. The toolbar switches layout
+(hierarchical / radial / force), focuses a table's FK neighbourhood, toggles
+column collapsing, and locks the canvas. The same knobs work as URL params for
+sharable states: `?layout=hierarchical`, `?focus=<node-id>`, `?collapse=off`,
+`?locked=on`.
+
 ## Install
 
 ```bash
@@ -65,7 +85,7 @@ export function Diagram({ payload }) {
 | `collapseColumns` | `boolean` | Collapse wide tables to a few rows with a "N more" toggle (default `true`). `false` shows every column — for a focused view where join columns must stay visible. |
 | `expandAll` | `boolean` | Controlled expand-all: forces every collapsible table open (`true`) or closed (`false`). Omit to let per-table toggles work independently. |
 | `onExpandStateChange` | `({ allExpanded, canExpand }) => void` | Reports the aggregate expand state so a host can label/disable its own expand-all button. |
-| `interactive` | `boolean` | Pan / zoom / drag (default `true`). `false` locks the canvas — gate it behind a "click to unlock" affordance. |
+| `interactive` | `boolean` | Pan / zoom / drag (default `true`). `false` locks the canvas and releases the wheel so the page scrolls past it — gate it behind a "click to unlock" affordance. |
 | `onNodeActivate` | `(node \| null) => void` | Header click activates; pane click clears. Render your own details pane. |
 | `onOpenNode` | `(node) => void` | Table double-click — open the backing model. |
 | `resourceMeta` | `Record<string, ResourceMeta>` | Colour/icon per `resource_type`. Merged over dbt defaults. |

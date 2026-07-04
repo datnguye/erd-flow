@@ -23,6 +23,12 @@ interface ReactFlowMockProps {
   onNodesChange?: (changes: unknown[]) => void;
   onEdgesChange?: (changes: unknown[]) => void;
   onPaneClick?: () => void;
+  panOnDrag?: boolean;
+  zoomOnScroll?: boolean;
+  zoomOnPinch?: boolean;
+  zoomOnDoubleClick?: boolean;
+  nodesDraggable?: boolean;
+  preventScrolling?: boolean;
 }
 
 export function reactFlowMock() {
@@ -41,8 +47,22 @@ export function reactFlowMock() {
       onNodesChange,
       onEdgesChange,
       onPaneClick,
+      panOnDrag,
+      zoomOnScroll,
+      zoomOnPinch,
+      zoomOnDoubleClick,
+      nodesDraggable,
+      preventScrolling,
     }: ReactFlowMockProps) => (
-      <div data-testid="react-flow">
+      <div
+        data-testid="react-flow"
+        data-pan-on-drag={String(panOnDrag)}
+        data-zoom-on-scroll={String(zoomOnScroll)}
+        data-zoom-on-pinch={String(zoomOnPinch)}
+        data-zoom-on-double-click={String(zoomOnDoubleClick)}
+        data-nodes-draggable={String(nodesDraggable)}
+        data-prevent-scrolling={String(preventScrolling)}
+      >
         <button type="button" data-testid="pane" onClick={() => onPaneClick?.()}>
           pane
         </button>
