@@ -1,4 +1,19 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
+
+// The initial layout ends with an animated fitView (duration 200ms), so a
+// transform read taken as soon as the viewport exists can land mid-animation.
+// Wait until two consecutive reads match before treating it as the baseline.
+async function settledTransform(page: Page, viewport: Locator): Promise<string> {
+  let previous = await viewport.getAttribute("style");
+  await expect(async () => {
+    await page.waitForTimeout(250);
+    const current = await viewport.getAttribute("style");
+    const changed = current !== previous;
+    previous = current;
+    expect(changed).toBe(false);
+  }).toPass({ timeout: 10_000 });
+  return previous ?? "";
+}
 
 // End-to-end tests for <ErdFlow>, driven against the Vite-served demo page
 // (demo/main.tsx) in a real browser — the layout + React Flow rendering that
@@ -146,7 +161,7 @@ test.describe("interactive lock", () => {
     await page.goto(`${DEMO}?locked=on`);
     const viewport = page.locator(".react-flow__viewport");
     await expect(viewport).toBeVisible();
-    const before = await viewport.getAttribute("style");
+    const before = await settledTransform(page, viewport);
     await page.locator(".react-flow").hover();
     await page.mouse.wheel(0, 500);
     await page.waitForTimeout(200);
@@ -159,7 +174,7 @@ test.describe("interactive lock", () => {
     await page.goto(DEMO);
     const viewport = page.locator(".react-flow__viewport");
     await expect(viewport).toBeVisible();
-    const before = await viewport.getAttribute("style");
+    const before = await settledTransform(page, viewport);
     await page.locator(".react-flow").hover();
     await page.mouse.wheel(0, 500);
     await page.waitForTimeout(200);
