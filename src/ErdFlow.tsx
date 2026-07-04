@@ -449,6 +449,7 @@ export function ErdFlow(props: ErdFlowProps): ReactElement {
         zoomOnDoubleClick={interactive}
         nodesDraggable={interactive}
         panOnScroll={false}
+        preventScrolling={interactive}
       >
         {background ? <Background /> : null}
         {controls ? <Controls /> : null}
